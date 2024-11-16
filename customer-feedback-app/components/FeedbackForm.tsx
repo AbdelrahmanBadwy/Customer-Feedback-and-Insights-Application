@@ -20,19 +20,20 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
     setAlertMessage("");
 
     try {
+      // Analyze feedback using OpenAI
+      const analysis = await analyzeFeedback(feedback);
+      console.log(analysis);
+      onSubmitSuccess();
       // Save feedback in Supabase
       const { data, error } = await supabase
         .from("feedback")
         .insert({ text: feedback })
         .select();
       if (error) throw error;
-
-      // Analyze feedback using OpenAI
-      const analysis = await analyzeFeedback(feedback);
       await supabase
         .from("feedback")
         .update({ sentiment: analysis.sentiment, summary: analysis.summary })
-        .eq("feedbackid", data[0].feedbackId);
+        .eq("feedbackid", data[0].feedbackid);
 
       // Call the success callback to refresh the list
       onSubmitSuccess();
