@@ -9,11 +9,20 @@ export const openai = new OpenAI({
 export const generateSummary = async (text: string) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // Specify the model
-      messages: [{ role: "user", content: text }],
+      model: "gpt-4o-mini",
+      messages: [
+        {
+          role: "system",
+          content: "You are a text summarizer. Provide concise summaries.",
+        },
+        {
+          role: "user",
+          content: text,
+        },
+      ],
     });
 
-    return response.choices[0].message.content; // Return the AI-generated summary
+    return response.choices[0].message.content || "No summary available";
   } catch (error) {
     console.error("Error generating summary:", error);
     throw new Error("Error generating summary");
@@ -25,18 +34,19 @@ export const analyzeFeedback = async (
 ): Promise<{ sentiment: string; summary: string }> => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4o-mini", // Specify the OpenAI model gpt-4o-mini
-
+      model: "gpt-4o-mini",
       messages: [
         {
+          role: "system",
+          content:
+            "You are a sentiment analyzer. Respond in the following format exactly:\nSentiment: [positive/negative/neutral]\nSummary: [brief summary]",
+        },
+        {
           role: "user",
-          content: `Analyze the following text and provide:
-                    1. The sentiment as positive, negative, or neutral.
-                    2. A concise summary of the text.
-                    
-                    Text: "${text}"`,
+          content: `Analyze this feedback: "${text}"`,
         },
       ],
+      temperature: 0.3,
     });
 
     const content = response.choices[0]?.message?.content;
@@ -45,15 +55,30 @@ export const analyzeFeedback = async (
       throw new Error("No content returned from OpenAI API");
     }
 
-    // Parse the response assuming OpenAI returns a structured output
-    const [sentiment, summary] = content
-      .split("\n")
-      .map((line) => line.split(":")[1]?.trim());
+    // More robust parsing
+    const lines = content.split("\n");
+    let sentiment = "";
+    let summary = "";
 
-    if (!sentiment || !summary) {
-      throw new Error("Unexpected response format from OpenAI");
+    for (const line of lines) {
+      if (line.toLowerCase().startsWith("sentiment:")) {
+        sentiment = line.split(":")[1].trim().toLowerCase();
+      } else if (line.toLowerCase().startsWith("summary:")) {
+        summary = line.split(":")[1].trim();
+      }
     }
 
+    // Validate sentiment
+    if (!["positive", "negative", "neutral"].includes(sentiment)) {
+      sentiment = "neutral"; // Default fallback
+    }
+
+    // Validate summary
+    if (!summary) {
+      summary = "No summary available";
+    }
+
+    console.log("Parsed feedback analysis:", { sentiment, summary });
     return { sentiment, summary };
   } catch (error) {
     console.error("Error analyzing feedback:", error);
