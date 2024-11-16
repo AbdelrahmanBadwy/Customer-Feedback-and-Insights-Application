@@ -4,13 +4,13 @@ import { Feedback } from '../types/feedback';
 
 const InsightsChart: React.FC = () => {
   const [sentimentCounts, setSentimentCounts] = useState<{
-    Positive: number;
-    Neutral: number;
-    Negative: number;
+    positive: number;
+    neutral: number;
+    negative: number;
   }>({
-    Positive: 0,
-    Neutral: 0,
-    Negative: 0,
+    positive: 0,
+    neutral: 0,
+    negative: 0,
   });
 
   useEffect(() => {
@@ -18,9 +18,9 @@ const InsightsChart: React.FC = () => {
       try {
         const feedback = await fetchFeedbackList();
         const counts = {
-          Positive: 0,
-          Neutral: 0,
-          Negative: 0,
+          positive: 0,
+          neutral: 0,
+          negative: 0,
         };
 
         feedback.forEach((item: Feedback) => {

@@ -32,11 +32,11 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
       await supabase
         .from("feedback")
         .update({ sentiment: analysis.sentiment, summary: analysis.summary })
-        .eq("feedbackId", data[0].feedbackId);
+        .eq("feedbackid", data[0].feedbackId);
 
       // Call the success callback to refresh the list
       onSubmitSuccess();
-      
+
       setAlertMessage("Feedback submitted successfully!");
       setFeedback("");
     } catch (error: any) {

@@ -94,7 +94,7 @@ export const analyzeFeedbackAndUpdate = async (
       console.error("Error updating feedback:", error);
       throw new Error("Failed to update feedback.");
     }
-
+    console.log("Feedback ########:", { sentiment, summary });
     return { sentiment, summary };
   } catch (error) {
     console.error("Error analyzing feedback:", error);
