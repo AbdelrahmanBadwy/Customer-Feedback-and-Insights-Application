@@ -9,7 +9,7 @@ export const openai = new OpenAI({
 export const generateSummary = async (text: string) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Specify the model (you can also use 'gpt-3.5-turbo')
+      model: "gpt-4o-mini", // Specify the model
       messages: [{ role: "user", content: text }],
     });
 
@@ -25,7 +25,8 @@ export const analyzeFeedback = async (
 ): Promise<{ sentiment: string; summary: string }> => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-3.5-turbo", // Specify the OpenAI model
+      model: "gpt-4o-mini", // Specify the OpenAI model gpt-4o-mini
+
       messages: [
         {
           role: "user",
