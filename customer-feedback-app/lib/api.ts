@@ -1,5 +1,5 @@
-import supabase from './supabase';
-import { analyzeFeedback } from './openai'; // Assuming analyzeFeedback is defined in openai.ts
+import supabase from "./supabase";
+import { analyzeFeedback } from "./openai"; // Assuming analyzeFeedback is defined in openai.ts
 
 /**
  * Define the expected structure of feedback entries from the database.
@@ -16,16 +16,18 @@ interface FeedbackEntry {
  * @param {string} text - The feedback text.
  * @returns {Promise<{ id: string; text: string }>} - The saved feedback entry.
  */
-export const submitFeedback = async (text: string): Promise<{ id: string; text: string }> => {
+export const submitFeedback = async (
+  text: string
+): Promise<{ id: string; text: string }> => {
   const { data, error } = await supabase
-    .from('feedback')
+    .from("feedback")
     .insert({ text })
-    .select('feedbackid, text')
+    .select("feedbackid, text")
     .single();
 
   if (error) {
-    console.error('Error submitting feedback:', error);
-    throw new Error('Failed to submit feedback.');
+    console.error("Error submitting feedback:", error);
+    throw new Error("Failed to submit feedback.");
   }
 
   return { id: data.feedbackid, text: data.text };
@@ -36,24 +38,36 @@ export const submitFeedback = async (text: string): Promise<{ id: string; text: 
  * @returns {Promise<Array<{ id: string; text: string; sentiment: string | null; summary: string | null }>>}
  */
 export const fetchFeedbackList = async (): Promise<
-  Array<{ id: string; text: string; sentiment: string | null; summary: string | null }>
+  Array<{
+    id: string;
+    text: string;
+    sentiment: string | null;
+    summary: string | null;
+  }>
 > => {
   const { data, error } = await supabase
-    .from('feedback')
-    .select('feedbackid:feedbackid, text, sentiment, summary');
+    .from("feedback")
+    .select("feedbackid:feedbackid, text, sentiment, summary");
 
   if (error) {
-    console.error('Error fetching feedback list:', error);
-    throw new Error('Failed to fetch feedback list.');
+    console.error("Error fetching feedback list:", error);
+    throw new Error("Failed to fetch feedback list.");
   }
 
   // Safely map the data and handle potential null values
-  return data.map((entry: { feedbackid: string; text: string; sentiment: string | null; summary: string | null }) => ({
-    id: entry.feedbackid,
-    text: entry.text,
-    sentiment: entry.sentiment ?? 'Unknown',
-    summary: entry.summary ?? 'No summary available',
-  }));
+  return data.map(
+    (entry: {
+      feedbackid: string;
+      text: string;
+      sentiment: string | null;
+      summary: string | null;
+    }) => ({
+      id: entry.feedbackid,
+      text: entry.text,
+      sentiment: entry.sentiment ?? "Unknown",
+      summary: entry.summary ?? "No summary available",
+    })
+  );
 };
 
 /**
@@ -72,20 +86,22 @@ export const analyzeFeedbackAndUpdate = async (
 
     // Update the feedback entry with the analysis results
     const { error } = await supabase
-      .from('feedback')
+      .from("feedback")
       .update({ sentiment, summary })
-      .eq('feedbackId', id);
+      .eq("feedbackid", id);
 
     if (error) {
-      console.error('Error updating feedback:', error);
-      throw new Error('Failed to update feedback.');
+      console.error("Error updating feedback:", error);
+      throw new Error("Failed to update feedback.");
     }
 
     return { sentiment, summary };
   } catch (error) {
-    console.error('Error analyzing feedback:', error);
+    console.error("Error analyzing feedback:", error);
     throw new Error(
-      error instanceof Error ? `Error analyzing feedback: ${error.message}` : 'Unknown error'
+      error instanceof Error
+        ? `Error analyzing feedback: ${error.message}`
+        : "Unknown error"
     );
   }
 };

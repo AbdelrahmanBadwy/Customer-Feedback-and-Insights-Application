@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import supabase from '../lib/supabase';
-import Table from './ui/Table';
+import React, { useEffect, useState } from "react";
+import Table from "./ui/Table";
 import { Feedback } from "../types/feedback";
 
 interface FeedbackListProps {
@@ -20,7 +19,7 @@ const FeedbackList: React.FC<FeedbackListProps> = ({ feedbackList }) => {
         <p>Loading feedback...</p>
       ) : (
         <Table
-          columns={['Feedback', 'Sentiment', 'Summary']}
+          columns={["Feedback", "Sentiment", "Summary"]}
           data={feedbackList.map((f) => ({
             Feedback: f.text,
             Sentiment: f.sentiment,
