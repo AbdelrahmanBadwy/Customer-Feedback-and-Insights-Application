@@ -1,4 +1,4 @@
-import { openai } from "@/lib/openai";
+import { openai } from "../lib/openai";
 
 export const summarizeText = async (text: string): Promise<string> => {
   try {
