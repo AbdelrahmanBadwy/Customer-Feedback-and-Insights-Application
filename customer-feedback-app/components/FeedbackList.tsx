@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Table from "./ui/Table";
 import { Feedback } from "../types/feedback";
+import { motion } from "framer-motion";
+import "../app/globals.css";
 
 interface FeedbackListProps {
   feedbackList: Feedback[];
@@ -14,9 +16,21 @@ const FeedbackList: React.FC<FeedbackListProps> = ({ feedbackList }) => {
   }, [feedbackList]);
 
   return (
-    <div>
+    <motion.div
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      transition={{ delay: 0.2 }}
+    >
       {loading ? (
-        <p>Loading feedback...</p>
+        <div className="flex justify-center py-8">
+          <div className="animate-pulse text-gray-500 dark:text-gray-400">
+            Loading feedback...
+          </div>
+        </div>
+      ) : feedbackList.length === 0 ? (
+        <div className="text-center py-8 text-gray-500 dark:text-gray-400">
+          No feedback submitted yet
+        </div>
       ) : (
         <Table
           columns={["Feedback", "Sentiment", "Summary"]}
@@ -27,7 +41,7 @@ const FeedbackList: React.FC<FeedbackListProps> = ({ feedbackList }) => {
           }))}
         />
       )}
-    </div>
+    </motion.div>
   );
 };
 

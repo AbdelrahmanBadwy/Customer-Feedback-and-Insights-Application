@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchFeedbackList, analyzeFeedbackAndUpdate } from "../lib/api";
 import InsightsChart from "../components/InsightsChart";
 import { Feedback } from "../types/feedback";
-
+import "../app/globals.css";
 const InsightsPage = () => {
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);
   const [insightsData, setInsightsData] = useState<any>([]);
@@ -27,9 +27,11 @@ const InsightsPage = () => {
   }, []);
 
   return (
-    <div>
-      <h1>Insights Page</h1>
-      <InsightsChart />
+    <div className="min-h-screen bg-gray flex items-center justify-center text-gray-100 px-4">
+      <div className="bg-gray-800 rounded-lg shadow-lg w-full max-w-2xl p-8">
+        <h1 className="text-3xl font-bold mb-6 text-center">Insights Page</h1>
+        <InsightsChart />
+      </div>
     </div>
   );
 };

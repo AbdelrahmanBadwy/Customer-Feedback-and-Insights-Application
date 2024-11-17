@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from "next";
-import { fetchFeedbackList } from "@/lib/api";
+import { fetchFeedbackList } from "../../../lib/api";
 
 export default async function handler(
   req: NextApiRequest,

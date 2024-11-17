@@ -1,3 +1,6 @@
+@import "tailwindcss/base";
+@import "tailwindcss/components";
+@import "tailwindcss/utilities";
 .chart-container {
   padding: 1rem;
 }
@@ -33,13 +36,13 @@
 }
 
 .positive-bar {
-  background-color: #10B981;
+  background-color: #10b981;
 }
 
 .neutral-bar {
-  background-color: #F59E0B;
+  background-color: #f59e0b;
 }
 
 .negative-bar {
-  background-color: #EF4444;
-} 
+  background-color: #ef4444;
+}

@@ -1,9 +1,10 @@
 import React, { useState } from "react";
+import Form from "./ui/Form";
 import Button from "./ui/Button";
-import Input from "./ui/Input";
 import Alert from "./ui/Alert";
-import supabase from "../lib/supabase";
 import { analyzeFeedback } from "../lib/openai";
+import { motion } from "framer-motion";
+import "../app/globals.css";
 
 interface FeedbackFormProps {
   onSubmitSuccess: () => void;
@@ -20,24 +21,8 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
     setAlertMessage("");
 
     try {
-      // Analyze feedback using OpenAI
       const analysis = await analyzeFeedback(feedback);
-      console.log(analysis);
-      onSubmitSuccess();
-      // Save feedback in Supabase
-      const { data, error } = await supabase
-        .from("feedback")
-        .insert({ text: feedback })
-        .select();
-      if (error) throw error;
-      await supabase
-        .from("feedback")
-        .update({ sentiment: analysis.sentiment, summary: analysis.summary })
-        .eq("feedbackid", data[0].feedbackid);
-
-      // Call the success callback to refresh the list
-      onSubmitSuccess();
-
+      await onSubmitSuccess();
       setAlertMessage("Feedback submitted successfully!");
       setFeedback("");
     } catch (error: any) {
@@ -48,26 +33,50 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <Form onSubmit={handleSubmit} title="Share Your Feedback" loading={loading}>
       {alertMessage && (
-        <Alert
-          message={alertMessage}
-          type={alertMessage.startsWith("Error") ? "error" : "success"}
-        />
+        <motion.div
+          initial={{ opacity: 0, height: 0 }}
+          animate={{ opacity: 1, height: "auto" }}
+          exit={{ opacity: 0, height: 0 }}
+        >
+          <Alert
+            message={alertMessage}
+            type={alertMessage.startsWith("Error") ? "error" : "success"}
+          />
+        </motion.div>
       )}
-      <Input
-        label="Your Feedback"
-        placeholder="Enter your feedback"
-        value={feedback}
-        onChange={(e: { target: { value: React.SetStateAction<string> } }) =>
-          setFeedback(e.target.value)
-        }
-        required
-      />
-      <Button type="submit" disabled={loading}>
-        {loading ? "Submitting..." : "Submit Feedback"}
+      <div className="space-y-2">
+        <textarea
+          value={feedback}
+          onChange={(e) => setFeedback(e.target.value)}
+          placeholder="Enter your feedback here..."
+          required
+          className="w-full px-4 py-3 rounded-lg border border-gray-300 dark:border-gray-600
+                   focus:ring-2 focus:ring-blue-500 focus:border-transparent
+                   bg-white dark:bg-gray-700
+                   text-gray-900 dark:text-gray-100
+                   placeholder-gray-400 dark:placeholder-gray-500
+                   transition-all duration-200
+                   min-h-[120px] resize-y"
+        />
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          className="text-sm text-gray-500 dark:text-gray-400"
+        >
+          {feedback.length}/500 characters
+        </motion.div>
+      </div>
+      <Button
+        type="submit"
+        disabled={loading || feedback.length === 0}
+        loading={loading}
+        className="w-full sm:w-auto"
+      >
+        Submit Feedback
       </Button>
-    </form>
+    </Form>
   );
 };
 
