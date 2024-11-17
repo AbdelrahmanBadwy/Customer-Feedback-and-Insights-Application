@@ -47,41 +47,35 @@ const Table: React.FC<TableProps> = ({
   return (
     <div className="overflow-hidden rounded-lg shadow ring-1 ring-black ring-opacity-5">
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-300 dark:divide-gray-700">
-          <thead className="bg-gray-50 dark:bg-gray-800">
+        <table className="min-w-full border border-gray-700 divide-y divide-gray-700">
+          <thead className="bg-gray-900">
             <tr>
               {columns.map((column) => (
                 <th
                   key={column}
                   onClick={() => handleSort(column)}
-                  className="px-6 py-3 text-left text-sm font-semibold text-gray-900 dark:text-gray-100 cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-700"
+                  className="px-6 py-3 text-left text-sm font-semibold text-gray-100 cursor-pointer border-b border-gray-700 hover:bg-gray-800"
                 >
-                  <div className="flex items-center space-x-1">
+                  <div className="flex items-center justify-between space-x-2">
                     <span>{column}</span>
                     {sortColumn === column && (
-                      <span className="w-4 h-4">
-                        {sortDirection === "asc" ? (
-                          <ChevronUpIcon />
-                        ) : (
-                          <ChevronDownIcon />
-                        )}
-                      </span>
+                      <span className="inline-block"></span>
                     )}
                   </div>
                 </th>
               ))}
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-200 dark:divide-gray-700 bg-white dark:bg-gray-900">
+          <tbody className="bg-black divide-y divide-gray-800">
             {paginatedData.map((row, idx) => (
               <tr
                 key={idx}
-                className="hover:bg-gray-50 dark:hover:bg-gray-800 transition-colors duration-200"
+                className="hover:bg-gray-800 transition-colors duration-200"
               >
                 {columns.map((column) => (
                   <td
                     key={column}
-                    className="px-6 py-4 text-sm text-gray-900 dark:text-gray-100"
+                    className="px-6 py-4 text-sm text-gray-300 border-b border-gray-800"
                   >
                     {row[column]}
                   </td>
@@ -93,7 +87,7 @@ const Table: React.FC<TableProps> = ({
       </div>
 
       {totalPages > 1 && (
-        <div className="flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
+        <div className="flex items-center justify-between px-4 py-3 bg-gray-900 border-t border-gray-700">
           <div className="flex justify-between sm:hidden">
             <Button
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -116,7 +110,7 @@ const Table: React.FC<TableProps> = ({
           </div>
           <div className="hidden sm:flex sm:items-center sm:justify-between">
             <div>
-              <p className="text-sm text-gray-700 dark:text-gray-300">
+              <p className="text-sm text-gray-400">
                 Showing <span className="font-medium">{startIndex + 1}</span> to{" "}
                 <span className="font-medium">
                   {Math.min(startIndex + itemsPerPage, data.length)}
@@ -133,7 +127,7 @@ const Table: React.FC<TableProps> = ({
                     className={`px-3 py-1 rounded-md text-sm font-medium ${
                       currentPage === page
                         ? "bg-blue-500 text-white"
-                        : "text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700"
+                        : "text-gray-400 hover:bg-gray-800"
                     }`}
                   >
                     {page}

@@ -14,5 +14,9 @@ export default {
       },
     },
   },
-  plugins: [require("tailwindcss"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss"),
+    require("@tailwindcss/typography"),
+    require("autoprefixer"),
+  ],
 } satisfies Config;
