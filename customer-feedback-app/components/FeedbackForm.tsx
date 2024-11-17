@@ -4,6 +4,7 @@ import Button from "./ui/Button";
 import Alert from "./ui/Alert";
 import { analyzeFeedback } from "../lib/openai";
 import { motion } from "framer-motion";
+import "../app/globals.css";
 
 interface FeedbackFormProps {
   onSubmitSuccess: () => void;

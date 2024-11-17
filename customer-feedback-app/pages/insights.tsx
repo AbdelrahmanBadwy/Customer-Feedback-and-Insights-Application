@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { fetchFeedbackList, analyzeFeedbackAndUpdate } from "../lib/api";
 import InsightsChart from "../components/InsightsChart";
 import { Feedback } from "../types/feedback";
+import "../app/globals.css";
 
 const InsightsPage = () => {
   const [feedbackList, setFeedbackList] = useState<Feedback[]>([]);

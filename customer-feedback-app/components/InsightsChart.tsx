@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { fetchFeedbackList } from '../lib/api';
-import { Feedback } from '../types/feedback';
+import React, { useEffect, useState } from "react";
+import { fetchFeedbackList } from "../lib/api";
+import { Feedback } from "../types/feedback";
+import "../app/globals.css";
 
 const InsightsChart: React.FC = () => {
   const [sentimentCounts, setSentimentCounts] = useState<{
@@ -24,14 +25,17 @@ const InsightsChart: React.FC = () => {
         };
 
         feedback.forEach((item: Feedback) => {
-          if (item.sentiment && counts[item.sentiment as keyof typeof counts] !== undefined) {
+          if (
+            item.sentiment &&
+            counts[item.sentiment as keyof typeof counts] !== undefined
+          ) {
             counts[item.sentiment as keyof typeof counts]++;
           }
         });
 
         setSentimentCounts(counts);
       } catch (error) {
-        console.error('Error fetching feedback data for chart:', error);
+        console.error("Error fetching feedback data for chart:", error);
       }
     };
 
@@ -50,15 +54,15 @@ const InsightsChart: React.FC = () => {
             <div className="flex-1">
               <div
                 className={`h-8 rounded ${
-                  sentiment === 'Positive'
-                    ? 'bg-green-500'
-                    : sentiment === 'Neutral'
-                    ? 'bg-yellow-500'
-                    : 'bg-red-500'
+                  sentiment === "Positive"
+                    ? "bg-green-500"
+                    : sentiment === "Neutral"
+                    ? "bg-yellow-500"
+                    : "bg-red-500"
                 }`}
                 style={{
                   width: `${(count / maxCount) * 100}%`,
-                  minWidth: count > 0 ? '20px' : '0',
+                  minWidth: count > 0 ? "20px" : "0",
                 }}
               />
             </div>

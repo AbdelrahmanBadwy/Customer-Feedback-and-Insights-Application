@@ -1,9 +1,10 @@
-import React from 'react';
-import Link from 'next/link';
+import React from "react";
+import Link from "next/link";
 
 interface LayoutProps {
   children: React.ReactNode;
 }
+import "../app/globals.css";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
@@ -19,13 +20,13 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
               </Link>
             </div>
             <div className="flex items-center space-x-4">
-              <Link 
+              <Link
                 href="/feedback"
                 className="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
               >
                 Feedback
               </Link>
-              <Link 
+              <Link
                 href="/insights"
                 className="px-4 py-2 rounded-lg text-gray-700 dark:text-gray-200 hover:bg-gray-100 dark:hover:bg-gray-700 transition-all duration-200"
               >
@@ -45,4 +46,4 @@ const Layout: React.FC<LayoutProps> = ({ children }) => {
   );
 };
 
-export default Layout; 
+export default Layout;
