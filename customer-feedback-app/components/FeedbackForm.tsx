@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Form from "./ui/Form";
 import Button from "./ui/Button";
 import Alert from "./ui/Alert";
-import { analyzeFeedback } from "../lib/openai";
+import { submitFeedback, analyzeFeedbackAndUpdate } from "../lib/api";
 import { motion } from "framer-motion";
 import "../app/globals.css";
 
@@ -21,7 +21,12 @@ const FeedbackForm: React.FC<FeedbackFormProps> = ({ onSubmitSuccess }) => {
     setAlertMessage("");
 
     try {
-      const analysis = await analyzeFeedback(feedback);
+      // First submit the feedback to get the ID
+      const { id, text } = await submitFeedback(feedback);
+
+      // Then analyze the feedback and update the database
+      await analyzeFeedbackAndUpdate(id, text);
+
       await onSubmitSuccess();
       setAlertMessage("Feedback submitted successfully!");
       setFeedback("");
