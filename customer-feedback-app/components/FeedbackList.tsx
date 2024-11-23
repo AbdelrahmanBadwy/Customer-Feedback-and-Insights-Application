@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import Table from "./ui/Table";
 import { Feedback } from "../types/feedback";
 import { motion } from "framer-motion";
-import "../app/globals.css";
 
 interface FeedbackListProps {
   feedbackList: Feedback[];

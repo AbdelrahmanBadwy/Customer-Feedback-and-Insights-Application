@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ChevronUpIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import Button from "./Button";
 type SortDirection = "asc" | "desc" | null;
-import "../../app/globals.css";
 
 type TableProps = {
   columns: string[];

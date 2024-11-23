@@ -4,7 +4,6 @@ import Link from "next/link";
 interface LayoutProps {
   children: React.ReactNode;
 }
-import "../app/globals.css";
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (

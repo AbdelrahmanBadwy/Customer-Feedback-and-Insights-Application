@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { fetchFeedbackList } from "../lib/api";
 import { Feedback } from "../types/feedback";
-import "../app/globals.css";
 const InsightsChart: React.FC = () => {
   const [sentimentCounts, setSentimentCounts] = useState<{
     positive: number;

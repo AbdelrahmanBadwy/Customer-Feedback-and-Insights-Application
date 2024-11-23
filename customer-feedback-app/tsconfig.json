@@ -2,7 +2,7 @@
   "compilerOptions": {
     "target": "es5",
     "module": "esnext",
-    "moduleResolution": "node", // This line should resolve the error
+    "moduleResolution": "node",
     "strict": true,
     "esModuleInterop": true,
     "skipLibCheck": true,
@@ -15,14 +15,14 @@
       "dom.iterable",
       "esnext"
     ],
-    "noEmit": true,
     "incremental": true,
     "isolatedModules": true,
     "plugins": [
       {
         "name": "next"
       }
-    ]
+    ],
+    "noEmit": true
   },
   "include": [
     "next-env.d.ts",
