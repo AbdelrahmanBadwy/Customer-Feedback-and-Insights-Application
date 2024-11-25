@@ -12,25 +12,6 @@ A modern web application designed to collect and analyze customer feedback with 
 
 ---
 
-## Project Structure
-
-```
-customer-feedback-app/
-├── pages/               # Next.js pages for routing
-│   ├── api/             # API routes for server-side operations
-│   ├── feedback.tsx     # Feedback submission page
-│   └── insights.tsx     # Insights dashboard
-├── components/          # Reusable React components
-├── styles/              # TailwindCSS and global styles
-│   └── globals.css      # Global CSS for the app
-├── public/              # Static assets (images, fonts, etc.)
-├── tailwind.config.ts   # TailwindCSS configuration
-├── postcss.config.js    # PostCSS configuration
-├── tsconfig.json        # TypeScript configuration
-└── package.json         # Project dependencies and scripts
-```
-
----
 
 ## Prerequisites
 
